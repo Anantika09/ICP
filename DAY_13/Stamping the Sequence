@@ -1,1 +1,42 @@
+class Solution{
+    public int[] movesToStamp(String a,String b){
+        int n=b.length(),m=a.length();
+        char[] t=b.toCharArray(),s=a.toCharArray();
+        boolean[] v=new boolean[n];
+        int c=n;
+        java.util.ArrayList<Integer> r=new java.util.ArrayList<>();
+        while(c>0){
+            boolean f=false;
+            for(int i=0;i<=n-m;i++){
+                if(!v[i]&&ok(t,s,i)){
+                    c-=doit(t,i,m);
+                    v[i]=true;
+                    f=true;
+                    r.add(i);
+                    if(c==0)break;
+                }
+            }
+            if(!f)return new int[0];
+        }
+        int[] ans=new int[r.size()];
+        for(int i=0;i<r.size();i++)ans[i]=r.get(r.size()-1-i);
+        return ans;
+    }
+    boolean ok(char[] t,char[] s,int p){
+        for(int i=0;i<s.length;i++){
+            if(t[p+i]!='?'&&t[p+i]!=s[i])return false;
+        }
+        return true;
+    }
+    int doit(char[] t,int p,int m){
+        int x=0;
+        for(int i=0;i<m;i++){
+            if(t[p+i]!='?'){
+                t[p+i]='?';
+                x++;
+            }
+        }
+        return x;
+    }
+}
 
